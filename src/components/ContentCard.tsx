@@ -20,9 +20,10 @@ interface Content {
 
 interface ContentCardProps {
   content: Content;
+  onClick?: () => void;
 }
 
-const ContentCard = ({ content }: ContentCardProps) => {
+const ContentCard = ({ content, onClick }: ContentCardProps) => {
   const [isLiked, setIsLiked] = useState(false);
 
   const getPlatformColor = (platform: string) => {
@@ -37,18 +38,21 @@ const ContentCard = ({ content }: ContentCardProps) => {
     return colors[platform] || 'bg-gray-500';
   };
 
-  const handleWatchClick = () => {
-    // 실제로는 해당 플랫폼으로 리다이렉트
+  const handleWatchClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
     alert(`${content.platform}에서 "${content.title}" 보기`);
   };
 
-  const handleLikeToggle = () => {
+  const handleLikeToggle = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setIsLiked(!isLiked);
-    // 실제로는 좋아요 상태를 서버에 저장
   };
 
   return (
-    <Card className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-0 overflow-hidden">
+    <Card 
+      className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-0 overflow-hidden cursor-pointer"
+      onClick={onClick}
+    >
       <div className="relative">
         <img
           src={content.thumbnail}
