@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -7,6 +6,7 @@ import Header from "@/components/Header";
 import ContentCard from "@/components/ContentCard";
 import FilterDialog from "@/components/FilterDialog";
 import ContentDetailDialog from "@/components/ContentDetailDialog";
+import InfiniteCarousel from "@/components/InfiniteCarousel";
 import { Search, Sparkles, TrendingUp, Clock, Flame, Award, Calendar, Heart } from "lucide-react";
 
 interface UserPreferences {
@@ -42,9 +42,9 @@ const Home = () => {
   const [userPreferences, setUserPreferences] = useState<UserPreferences | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedFilters, setSelectedFilters] = useState({
-    platform: "all",
-    genre: "all",
-    mood: "all"
+    platforms: [] as string[],
+    genres: [] as string[],
+    moods: [] as string[]
   });
   const [selectedContent, setSelectedContent] = useState<MockContent | null>(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
@@ -239,9 +239,9 @@ const Home = () => {
 
   const filteredContents = mockContents.filter(content => {
     const matchesSearch = content.title.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesPlatform = selectedFilters.platform === "all" || content.platform === selectedFilters.platform;
-    const matchesGenre = selectedFilters.genre === "all" || content.genre === selectedFilters.genre;
-    const matchesMood = selectedFilters.mood === "all" || content.mood === selectedFilters.mood;
+    const matchesPlatform = selectedFilters.platforms.length === 0 || selectedFilters.platforms.includes(content.platform);
+    const matchesGenre = selectedFilters.genres.length === 0 || selectedFilters.genres.includes(content.genre);
+    const matchesMood = selectedFilters.moods.length === 0 || selectedFilters.moods.includes(content.mood);
     
     return matchesSearch && matchesPlatform && matchesGenre && matchesMood;
   });
@@ -268,10 +268,10 @@ const Home = () => {
       <Header />
       
       <div className="container mx-auto px-4 py-8">
-        {/* Welcome Section */}
-        {userPreferences && (
-          <Card className="mb-8 border-0 shadow-lg">
-            <CardContent className="p-6">
+        {/* Welcome Section with Infinite Carousel */}
+        <Card className="mb-8 border-0 shadow-lg overflow-hidden">
+          <CardContent className="p-0">
+            <div className="p-6 pb-4">
               <div className="flex items-center gap-3 mb-4">
                 <Sparkles className="w-6 h-6 text-purple-600" />
                 <h2 className="text-2xl font-bold">환영합니다!</h2>
@@ -279,21 +279,25 @@ const Home = () => {
               <p className="text-gray-600 mb-4">
                 당신의 취향을 바탕으로 엄선한 콘텐츠들을 준비했어요
               </p>
-              <div className="flex flex-wrap gap-2">
-                {userPreferences.genres.slice(0, 3).map(genre => (
-                  <Badge key={genre} variant="secondary" className="text-xs">
-                    {genre}
-                  </Badge>
-                ))}
-                {userPreferences.moods.slice(0, 2).map(mood => (
-                  <Badge key={mood} variant="outline" className="text-xs">
-                    {mood}
-                  </Badge>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        )}
+              {userPreferences && (
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {userPreferences.genres.slice(0, 3).map(genre => (
+                    <Badge key={genre} variant="secondary" className="text-xs">
+                      {genre}
+                    </Badge>
+                  ))}
+                  {userPreferences.moods.slice(0, 2).map(mood => (
+                    <Badge key={mood} variant="outline" className="text-xs">
+                      {mood}
+                    </Badge>
+                  ))}
+                </div>
+              )}
+            </div>
+            
+            <InfiniteCarousel />
+          </CardContent>
+        </Card>
 
         {/* Search Bar */}
         <div className="relative mb-8">
@@ -312,6 +316,27 @@ const Home = () => {
             selectedFilters={selectedFilters}
             onFiltersChange={setSelectedFilters}
           />
+          
+          {/* Active Filters Display */}
+          {(selectedFilters.platforms.length > 0 || selectedFilters.genres.length > 0 || selectedFilters.moods.length > 0) && (
+            <div className="flex flex-wrap gap-2">
+              {selectedFilters.platforms.map(platform => (
+                <Badge key={platform} variant="secondary" className="text-xs">
+                  {platform}
+                </Badge>
+              ))}
+              {selectedFilters.genres.map(genre => (
+                <Badge key={genre} variant="secondary" className="text-xs">
+                  {genre}
+                </Badge>
+              ))}
+              {selectedFilters.moods.map(mood => (
+                <Badge key={mood} variant="secondary" className="text-xs">
+                  {mood}
+                </Badge>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Search Results */}
