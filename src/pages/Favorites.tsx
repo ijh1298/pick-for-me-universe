@@ -23,8 +23,20 @@ const Favorites = () => {
       description: "전 세계를 뒤흔든 봉준호 감독의 대표작. 계급사회의 모순을 날카롭게 그려낸 작품입니다.",
       duration: "132분",
       reviews: [
-        { user: "영화광123", rating: 5, comment: "정말 충격적이고 깊이 있는 작품이었습니다!" },
-        { user: "드라마러버", rating: 4, comment: "연출과 연기 모두 완벽했어요" }
+        { 
+          id: "1",
+          author: "영화광123", 
+          rating: 5, 
+          content: "정말 충격적이고 깊이 있는 작품이었습니다!",
+          date: "2024-01-15"
+        },
+        { 
+          id: "2",
+          author: "드라마러버", 
+          rating: 4, 
+          content: "연출과 연기 모두 완벽했어요",
+          date: "2024-01-10"
+        }
       ]
     },
     {
@@ -39,8 +51,20 @@ const Favorites = () => {
       description: "전 세계적 신드롬을 일으킨 한국 드라마. 생존 게임의 새로운 패러다임을 제시했습니다.",
       duration: "60분×9화",
       reviews: [
-        { user: "글로벌뷰어", rating: 5, comment: "전 세계가 열광한 이유를 알 수 있었어요!" },
-        { user: "한류팬", rating: 4, comment: "한국 콘텐츠의 위상을 보여준 작품" }
+        { 
+          id: "3",
+          author: "글로벌뷰어", 
+          rating: 5, 
+          content: "전 세계가 열광한 이유를 알 수 있었어요!",
+          date: "2024-01-20"
+        },
+        { 
+          id: "4",
+          author: "한류팬", 
+          rating: 4, 
+          content: "한국 콘텐츠의 위상을 보여준 작품",
+          date: "2024-01-18"
+        }
       ]
     }
   ];
@@ -84,6 +108,7 @@ const Favorites = () => {
           content={selectedContent}
           isOpen={isDetailOpen}
           onClose={() => setIsDetailOpen(false)}
+          allContents={favoriteContents}
         />
       )}
     </div>

@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import Header from "@/components/Header";
 import ContentCard from "@/components/ContentCard";
@@ -11,8 +12,9 @@ const Home = () => {
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [selectedContent, setSelectedContent] = useState(null);
   const [filters, setFilters] = useState({
-    genre: [],
-    mood: [],
+    platforms: [],
+    genres: [],
+    moods: [],
   });
 
   // 목 데이터 수정 - 오징어게임 포스터 교체
@@ -324,6 +326,7 @@ const Home = () => {
           content={selectedContent}
           isOpen={isDetailOpen}
           onClose={() => setIsDetailOpen(false)}
+          allContents={allContents}
         />
       )}
     </div>
