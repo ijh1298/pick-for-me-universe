@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Header from "@/components/Header";
 import ContentCard from "@/components/ContentCard";
@@ -6,7 +5,8 @@ import ContentDetailDialog from "@/components/ContentDetailDialog";
 import FilterDialog from "@/components/FilterDialog";
 import InfiniteCarousel from "@/components/InfiniteCarousel";
 import { Button } from "@/components/ui/button";
-import { Filter, Sparkles, TrendingUp, Award, Zap, Calendar, Settings, Star } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Filter, Sparkles, TrendingUp, Award, Zap, Calendar, Settings, Star, X, ThumbsUp } from "lucide-react";
 
 const Home = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -18,7 +18,10 @@ const Home = () => {
     moods: [],
   });
 
-  // 목 데이터 - 썸네일 복원
+  // 리뷰 공감 상태 관리
+  const [reviewLikes, setReviewLikes] = useState({});
+
+  // 목 데이터 - 썸네일 복원 및 리뷰 공감 수 추가
   const allContents = [
     {
       id: "1",
@@ -33,8 +36,8 @@ const Home = () => {
       duration: "132분",
       category: "custom",
       reviews: [
-        { id: "1", author: "영화광123", rating: 5, content: "정말 충격적이고 깊이 있는 작품이었습니다!", date: "2024-01-15" },
-        { id: "2", author: "드라마러버", rating: 4, content: "연출과 연기 모두 완벽했어요", date: "2024-01-10" }
+        { id: "1", author: "영화광123", rating: 5, content: "정말 충격적이고 깊이 있는 작품이었습니다!", date: "2024-01-15", likes: 24 },
+        { id: "2", author: "드라마러버", rating: 4, content: "연출과 연기 모두 완벽했어요", date: "2024-01-10", likes: 18 }
       ]
     },
     {
@@ -50,8 +53,8 @@ const Home = () => {
       duration: "148분",
       category: "awarded",
       reviews: [
-        { id: "3", author: "놀란팬", rating: 5, content: "놀란 감독님, 제 꿈도 설계해주세요!", date: "2024-01-12" },
-        { id: "4", author: "SF매니아", rating: 4, content: "스토리텔링이 정말 대단해요", date: "2024-01-08" }
+        { id: "3", author: "놀란팬", rating: 5, content: "놀란 감독님, 제 꿈도 설계해주세요!", date: "2024-01-12", likes: 31 },
+        { id: "4", author: "SF매니아", rating: 4, content: "스토리텔링이 정말 대단해요", date: "2024-01-08", likes: 22 }
       ]
     },
     {
@@ -67,8 +70,8 @@ const Home = () => {
       duration: "181분",
       category: "trending",
       reviews: [
-        { id: "5", author: "마블팬", rating: 5, content: "마블은 역시 실망시키지 않아요!", date: "2024-01-05" },
-        { id: "6", author: "액션히어로", rating: 4, content: "액션씬이 정말 화려하고 멋있었어요", date: "2024-01-03" }
+        { id: "5", author: "마블팬", rating: 5, content: "마블은 역시 실망시키지 않아요!", date: "2024-01-05", likes: 45 },
+        { id: "6", author: "액션히어로", rating: 4, content: "액션씬이 정말 화려하고 멋있었어요", date: "2024-01-03", likes: 28 }
       ]
     },
     {
@@ -84,8 +87,8 @@ const Home = () => {
       duration: "60분×9화",
       category: "trending",
       reviews: [
-        { id: "7", author: "글로벌뷰어", rating: 5, content: "전 세계가 열광한 이유를 알 수 있었어요!", date: "2024-01-01" },
-        { id: "8", author: "한류팬", rating: 4, content: "한국 콘텐츠의 위상을 보여준 작품", date: "2024-01-02" }
+        { id: "7", author: "글로벌뷰어", rating: 5, content: "전 세계가 열광한 이유를 알 수 있었어요!", date: "2024-01-01", likes: 52 },
+        { id: "8", author: "한류팬", rating: 4, content: "한국 콘텐츠의 위상을 보여준 작품", date: "2024-01-02", likes: 38 }
       ]
     },
     {
@@ -101,8 +104,8 @@ const Home = () => {
       duration: "108분",
       category: "custom",
       reviews: [
-        { id: "9", author: "감성충만", rating: 5, content: "인생 영화 등극! OST도 너무 좋아요", date: "2024-01-04" },
-        { id: "10", author: "멜로홀릭", rating: 4, content: "영상미가 정말 아름다워요", date: "2024-01-06" }
+        { id: "9", author: "감성충만", rating: 5, content: "인생 영화 등극! OST도 너무 좋아요", date: "2024-01-04", likes: 29 },
+        { id: "10", author: "멜로홀릭", rating: 4, content: "영상미가 정말 아름다워요", date: "2024-01-06", likes: 19 }
       ]
     },
     {
@@ -118,8 +121,8 @@ const Home = () => {
       duration: "50분×8화",
       category: "new",
       reviews: [
-        { id: "11", author: "SF드라마광", rating: 5, content: "밤새도록 정주행했어요!", date: "2024-01-07" },
-        { id: "12", author: "80년대향수", rating: 4, content: "80년대 분위기가 너무 좋아요", date: "2024-01-08" }
+        { id: "11", author: "SF드라마광", rating: 5, content: "밤새도록 정주행했어요!", date: "2024-01-07", likes: 33 },
+        { id: "12", author: "80년대향수", rating: 4, content: "80년대 분위기가 너무 좋아요", date: "2024-01-08", likes: 25 }
       ]
     },
     {
@@ -135,8 +138,8 @@ const Home = () => {
       duration: "99분",
       category: "awarded",
       reviews: [
-        { id: "13", author: "색감천재", rating: 5, content: "웨스 앤더슨 감독님은 천재 같아요!", date: "2024-01-09" },
-        { id: "14", author: "코미디매니아", rating: 4, content: "유머 코드가 너무 좋아요", date: "2024-01-10" }
+        { id: "13", author: "색감천재", rating: 5, content: "웨스 앤더슨 감독님은 천재 같아요!", date: "2024-01-09", likes: 27 },
+        { id: "14", author: "코미디매니아", rating: 4, content: "유머 코드가 너무 좋아요", date: "2024-01-10", likes: 21 }
       ]
     },
     {
@@ -152,8 +155,8 @@ const Home = () => {
       duration: "60분×3화",
       category: "new",
       reviews: [
-        { id: "15", author: "SF철학자", rating: 5, content: "생각할 거리를 던져주는 드라마", date: "2024-01-11" },
-        { id: "16", author: "블랙미러팬", rating: 4, content: "매 에피소드가 충격적이에요", date: "2024-01-12" }
+        { id: "15", author: "SF철학자", rating: 5, content: "생각할 거리를 던져주는 드라마", date: "2024-01-11", likes: 36 },
+        { id: "16", author: "블랙미러팬", rating: 4, content: "매 에피소드가 충격적이에요", date: "2024-01-12", likes: 23 }
       ]
     },
     {
@@ -169,8 +172,8 @@ const Home = () => {
       duration: "101분",
       category: "action",
       reviews: [
-        { id: "17", author: "액션광", rating: 5, content: "액션씬이 정말 시원하고 통쾌해요!", date: "2024-01-13" },
-        { id: "18", author: "키아누팬", rating: 4, content: "키아누 리브스는 역시 멋있어요", date: "2024-01-14" }
+        { id: "17", author: "액션광", rating: 5, content: "액션씬이 정말 시원하고 통쾌해요!", date: "2024-01-13", likes: 41 },
+        { id: "18", author: "키아누팬", rating: 4, content: "키아누 리브스는 역시 멋있어요", date: "2024-01-14", likes: 32 }
       ]
     },
     {
@@ -186,21 +189,60 @@ const Home = () => {
       duration: "112분",
       category: "action",
       reviews: [
-        { id: "19", author: "마블매니아", rating: 4, content: "베놈의 매력에 푹 빠졌어요!", date: "2024-01-15" },
-        { id: "20", author: "톰하디팬", rating: 3, content: "톰 하디의 연기는 역시 최고", date: "2024-01-16" }
+        { id: "19", author: "마블매니아", rating: 4, content: "베놈의 매력에 푹 빠졌어요!", date: "2024-01-15", likes: 26 },
+        { id: "20", author: "톰하디팬", rating: 3, content: "톰 하디의 연기는 역시 최고", date: "2024-01-16", likes: 17 }
       ]
     },
   ];
 
-  const customRecommendations = allContents.filter(content => content.category === 'custom');
-  const trendingContents = allContents.filter(content => content.category === 'trending');
-  const newReleases = allContents.filter(content => content.category === 'new');
-  const awardedContents = allContents.filter(content => content.category === 'awarded');
-  const actionThrillerContents = allContents.filter(content => content.category === 'action');
+  // 필터링된 콘텐츠 계산
+  const getFilteredContents = (contents) => {
+    return contents.filter(content => {
+      const platformMatch = filters.platforms.length === 0 || filters.platforms.includes(content.platform);
+      const genreMatch = filters.genres.length === 0 || filters.genres.some(genre => content.genre.includes(genre));
+      const moodMatch = filters.moods.length === 0 || filters.moods.some(mood => content.mood.includes(mood));
+      return platformMatch && genreMatch && moodMatch;
+    });
+  };
+
+  const customRecommendations = getFilteredContents(allContents.filter(content => content.category === 'custom'));
+  const trendingContents = getFilteredContents(allContents.filter(content => content.category === 'trending'));
+  const newReleases = getFilteredContents(allContents.filter(content => content.category === 'new'));
+  const awardedContents = getFilteredContents(allContents.filter(content => content.category === 'awarded'));
+  const actionThrillerContents = getFilteredContents(allContents.filter(content => content.category === 'action'));
+
+  // 공감 많은 리뷰 기반 추천 (likes가 30 이상인 리뷰를 가진 콘텐츠)
+  const popularReviewContents = allContents.filter(content => 
+    content.reviews && content.reviews.some(review => review.likes >= 30)
+  ).slice(0, 4);
 
   const handleContentClick = (content: any) => {
     setSelectedContent(content);
     setIsDetailOpen(true);
+  };
+
+  const removeFilter = (type: string, value: string) => {
+    setFilters(prev => ({
+      ...prev,
+      [type]: prev[type].filter(item => item !== value)
+    }));
+  };
+
+  const clearAllFilters = () => {
+    setFilters({
+      platforms: [],
+      genres: [],
+      moods: [],
+    });
+  };
+
+  const hasActiveFilters = filters.platforms.length > 0 || filters.genres.length > 0 || filters.moods.length > 0;
+
+  const handleReviewLike = (reviewId: string) => {
+    setReviewLikes(prev => ({
+      ...prev,
+      [reviewId]: !prev[reviewId]
+    }));
   };
 
   return (
@@ -215,7 +257,7 @@ const Home = () => {
               당신만을 위한 특별한 추천
             </h1>
             <p className="text-gray-400 text-lg">
-              AI가 선별한 맞춤형 콘텐츠를 만나보세요
+              AI가 선별한 맞춘형 콘텐츠를 만나보세요
             </p>
           </div>
           <InfiniteCarousel />
@@ -251,16 +293,71 @@ const Home = () => {
           </div>
         </div>
 
+        {/* Active Filters Display */}
+        {hasActiveFilters && (
+          <div className="mb-8 p-4 bg-gray-800 rounded-lg border border-gray-700">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-white font-semibold flex items-center gap-2">
+                <Filter className="w-4 h-4" />
+                적용된 필터
+              </h3>
+              <Button
+                onClick={clearAllFilters}
+                variant="outline"
+                size="sm"
+                className="text-gray-300 border-gray-600 hover:bg-gray-700"
+              >
+                전체 해제
+              </Button>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {filters.platforms.map(platform => (
+                <Badge
+                  key={platform}
+                  variant="secondary"
+                  className="bg-purple-600 text-white hover:bg-purple-700 cursor-pointer"
+                  onClick={() => removeFilter('platforms', platform)}
+                >
+                  {platform}
+                  <X className="w-3 h-3 ml-1" />
+                </Badge>
+              ))}
+              {filters.genres.map(genre => (
+                <Badge
+                  key={genre}
+                  variant="secondary"
+                  className="bg-pink-600 text-white hover:bg-pink-700 cursor-pointer"
+                  onClick={() => removeFilter('genres', genre)}
+                >
+                  {genre}
+                  <X className="w-3 h-3 ml-1" />
+                </Badge>
+              ))}
+              {filters.moods.map(mood => (
+                <Badge
+                  key={mood}
+                  variant="secondary"
+                  className="bg-blue-600 text-white hover:bg-blue-700 cursor-pointer"
+                  onClick={() => removeFilter('moods', mood)}
+                >
+                  {mood}
+                  <X className="w-3 h-3 ml-1" />
+                </Badge>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Content Sections */}
         <div className="space-y-12">
-          {/* 맞춤 추천 */}
+          {/* 공감 많은 리뷰 기반 추천 */}
           <section>
             <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-              <Sparkles className="w-6 h-6 text-purple-400" />
-              당신을 위한 맞춤 추천
+              <ThumbsUp className="w-6 h-6 text-green-400" />
+              리뷰어들이 극찬한 작품
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {customRecommendations.map((content) => (
+              {popularReviewContents.map((content) => (
                 <ContentCard
                   key={content.id}
                   content={content}
@@ -269,74 +366,101 @@ const Home = () => {
               ))}
             </div>
           </section>
+
+          {/* 맞춤 추천 */}
+          {customRecommendations.length > 0 && (
+            <section>
+              <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                <Sparkles className="w-6 h-6 text-purple-400" />
+                당신을 위한 맞춤 추천
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {customRecommendations.map((content) => (
+                  <ContentCard
+                    key={content.id}
+                    content={content}
+                    onClick={() => handleContentClick(content)}
+                  />
+                ))}
+              </div>
+            </section>
+          )}
 
           {/* 지금 뜨고 있는 작품 */}
-          <section>
-            <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-              <TrendingUp className="w-6 h-6 text-red-400" />
-              지금 뜨고 있는 작품
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {trendingContents.map((content) => (
-                <ContentCard
-                  key={content.id}
-                  content={content}
-                  onClick={() => handleContentClick(content)}
-                />
-              ))}
-            </div>
-          </section>
+          {trendingContents.length > 0 && (
+            <section>
+              <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                <TrendingUp className="w-6 h-6 text-red-400" />
+                지금 뜨고 있는 작품
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {trendingContents.map((content) => (
+                  <ContentCard
+                    key={content.id}
+                    content={content}
+                    onClick={() => handleContentClick(content)}
+                  />
+                ))}
+              </div>
+            </section>
+          )}
 
           {/* 최신 출시작 */}
-          <section>
-            <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-              <Calendar className="w-6 h-6 text-green-400" />
-              최신 출시작
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {newReleases.map((content) => (
-                <ContentCard
-                  key={content.id}
-                  content={content}
-                  onClick={() => handleContentClick(content)}
-                />
-              ))}
-            </div>
-          </section>
+          {newReleases.length > 0 && (
+            <section>
+              <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                <Calendar className="w-6 h-6 text-green-400" />
+                최신 출시작
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {newReleases.map((content) => (
+                  <ContentCard
+                    key={content.id}
+                    content={content}
+                    onClick={() => handleContentClick(content)}
+                  />
+                ))}
+              </div>
+            </section>
+          )}
 
           {/* 수상작 & 화제작 */}
-          <section>
-            <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-              <Award className="w-6 h-6 text-yellow-400" />
-              수상작 & 화제작
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {awardedContents.map((content) => (
-                <ContentCard
-                  key={content.id}
-                  content={content}
-                  onClick={() => handleContentClick(content)}
-                />
-              ))}
-            </div>
-          </section>
+          {awardedContents.length > 0 && (
+            <section>
+              <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                <Award className="w-6 h-6 text-yellow-400" />
+                수상작 & 화제작
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {awardedContents.map((content) => (
+                  <ContentCard
+                    key={content.id}
+                    content={content}
+                    onClick={() => handleContentClick(content)}
+                  />
+                ))}
+              </div>
+            </section>
+          )}
 
           {/* 액션 & 스릴러 */}
-          <section>
-            <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-              <Zap className="w-6 h-6 text-orange-400" />
-              액션 & 스릴러
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {actionThrillerContents.map((content) => (
-                <ContentCard
-                  key={content.id}
-                  content={content}
-                  onClick={() => handleContentClick(content)}
-                />
-              ))}
-            </div>
-          </section>
+          {actionThrillerContents.length > 0 && (
+            <section>
+              <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                <Zap className="w-6 h-6 text-orange-400" />
+                액션 & 스릴러
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {actionThrillerContents.map((content) => (
+                  <ContentCard
+                    key={content.id}
+                    content={content}
+                    onClick={() => handleContentClick(content)}
+                  />
+                ))}
+              </div>
+            </section>
+          )}
         </div>
       </main>
 
@@ -354,6 +478,8 @@ const Home = () => {
           isOpen={isDetailOpen}
           onClose={() => setIsDetailOpen(false)}
           allContents={allContents}
+          reviewLikes={reviewLikes}
+          onReviewLike={handleReviewLike}
         />
       )}
     </div>

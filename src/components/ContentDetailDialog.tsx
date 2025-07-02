@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Star, ExternalLink, Heart, Clock, Calendar, Users } from "lucide-react";
+import { Star, ExternalLink, Heart, Clock, Calendar, Users, ThumbsUp } from "lucide-react";
 import ContentCard from "./ContentCard";
 
 interface Content {
@@ -26,6 +26,7 @@ interface Content {
     rating: number;
     content: string;
     date: string;
+    likes: number;
   }>;
   similarContents?: Content[];
 }
@@ -35,9 +36,11 @@ interface ContentDetailDialogProps {
   isOpen: boolean;
   onClose: () => void;
   allContents: Content[];
+  reviewLikes: { [key: string]: boolean };
+  onReviewLike: (reviewId: string) => void;
 }
 
-const ContentDetailDialog = ({ content, isOpen, onClose, allContents }: ContentDetailDialogProps) => {
+const ContentDetailDialog = ({ content, isOpen, onClose, allContents, reviewLikes, onReviewLike }: ContentDetailDialogProps) => {
   const [isLiked, setIsLiked] = useState(false);
 
   if (!content) return null;
@@ -150,12 +153,14 @@ const ContentDetailDialog = ({ content, isOpen, onClose, allContents }: ContentD
               </div>
             </div>
 
-            {/* Reviews */}
+            {/* Reviews with Like Functionality */}
             {content.reviews && content.reviews.length > 0 && (
               <div>
                 <h2 className="text-xl font-semibold mb-4">리뷰</h2>
                 <div className="space-y-4">
-                  {content.reviews.map(review => (
+                  {content.reviews
+                    .sort((a, b) => b.likes - a.likes)
+                    .map(review => (
                     <Card key={review.id} className="border-gray-200">
                       <CardContent className="p-4">
                         <div className="flex items-center justify-between mb-2">
@@ -168,7 +173,29 @@ const ContentDetailDialog = ({ content, isOpen, onClose, allContents }: ContentD
                           </div>
                           <span className="text-sm text-gray-500">{review.date}</span>
                         </div>
-                        <p className="text-gray-600">{review.content}</p>
+                        <p className="text-gray-600 mb-3">{review.content}</p>
+                        <div className="flex items-center justify-between">
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            className={`flex items-center gap-2 ${
+                              reviewLikes[review.id] 
+                                ? 'text-blue-600 bg-blue-50 hover:bg-blue-100' 
+                                : 'text-gray-500 hover:text-blue-600 hover:bg-blue-50'
+                            }`}
+                            onClick={() => onReviewLike(review.id)}
+                          >
+                            <ThumbsUp className={`w-4 h-4 ${reviewLikes[review.id] ? 'fill-current' : ''}`} />
+                            <span className="text-sm">
+                              공감 {review.likes + (reviewLikes[review.id] ? 1 : 0)}
+                            </span>
+                          </Button>
+                          {review.likes >= 30 && (
+                            <Badge className="bg-green-100 text-green-800 text-xs">
+                              인기 리뷰
+                            </Badge>
+                          )}
+                        </div>
                       </CardContent>
                     </Card>
                   ))}
