@@ -8,6 +8,7 @@ import { Heart } from "lucide-react";
 const Favorites = () => {
   const [selectedContent, setSelectedContent] = useState(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const [reviewLikes, setReviewLikes] = useState({});
 
   // 즐겨찾기된 작품들 (실제로는 localStorage나 상태관리에서 가져와야 함)
   const favoriteContents = [
@@ -28,14 +29,16 @@ const Favorites = () => {
           author: "영화광123", 
           rating: 5, 
           content: "정말 충격적이고 깊이 있는 작품이었습니다!",
-          date: "2024-01-15"
+          date: "2024-01-15",
+          likes: 24
         },
         { 
           id: "2",
           author: "드라마러버", 
           rating: 4, 
           content: "연출과 연기 모두 완벽했어요",
-          date: "2024-01-10"
+          date: "2024-01-10",
+          likes: 18
         }
       ]
     },
@@ -56,14 +59,16 @@ const Favorites = () => {
           author: "글로벌뷰어", 
           rating: 5, 
           content: "전 세계가 열광한 이유를 알 수 있었어요!",
-          date: "2024-01-20"
+          date: "2024-01-20",
+          likes: 52
         },
         { 
           id: "4",
           author: "한류팬", 
           rating: 4, 
           content: "한국 콘텐츠의 위상을 보여준 작품",
-          date: "2024-01-18"
+          date: "2024-01-18",
+          likes: 38
         }
       ]
     }
@@ -72,6 +77,13 @@ const Favorites = () => {
   const handleContentClick = (content: any) => {
     setSelectedContent(content);
     setIsDetailOpen(true);
+  };
+
+  const handleReviewLike = (reviewId: string) => {
+    setReviewLikes(prev => ({
+      ...prev,
+      [reviewId]: !prev[reviewId]
+    }));
   };
 
   return (
@@ -109,6 +121,8 @@ const Favorites = () => {
           isOpen={isDetailOpen}
           onClose={() => setIsDetailOpen(false)}
           allContents={favoriteContents}
+          reviewLikes={reviewLikes}
+          onReviewLike={handleReviewLike}
         />
       )}
     </div>
