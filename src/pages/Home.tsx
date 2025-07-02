@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Header from "@/components/Header";
 import ContentCard from "@/components/ContentCard";
@@ -17,7 +16,7 @@ const Home = () => {
     moods: [],
   });
 
-  // 목 데이터 수정 - 오징어게임 포스터 교체
+  // 목 데이터 수정 - 리뷰 데이터 구조 수정
   const allContents = [
     {
       id: "1",
@@ -32,8 +31,8 @@ const Home = () => {
       duration: "132분",
       category: "custom",
       reviews: [
-        { user: "영화광123", rating: 5, comment: "정말 충격적이고 깊이 있는 작품이었습니다!" },
-        { user: "드라마러버", rating: 4, comment: "연출과 연기 모두 완벽했어요" }
+        { id: "1", author: "영화광123", rating: 5, content: "정말 충격적이고 깊이 있는 작품이었습니다!", date: "2024-01-15" },
+        { id: "2", author: "드라마러버", rating: 4, content: "연출과 연기 모두 완벽했어요", date: "2024-01-10" }
       ]
     },
     {
@@ -49,8 +48,8 @@ const Home = () => {
       duration: "148분",
       category: "awarded",
       reviews: [
-        { user: "놀란팬", rating: 5, comment: "놀란 감독님, 제 꿈도 설계해주세요!" },
-        { user: "SF매니아", rating: 4, comment: "스토리텔링이 정말 대단해요" }
+        { id: "3", author: "놀란팬", rating: 5, content: "놀란 감독님, 제 꿈도 설계해주세요!", date: "2024-01-12" },
+        { id: "4", author: "SF매니아", rating: 4, content: "스토리텔링이 정말 대단해요", date: "2024-01-08" }
       ]
     },
     {
@@ -66,8 +65,8 @@ const Home = () => {
       duration: "181분",
       category: "trending",
       reviews: [
-        { user: "마블팬", rating: 5, comment: "마블은 역시 실망시키지 않아요!" },
-        { user: "액션히어로", rating: 4, comment: "액션씬이 정말 화려하고 멋있었어요" }
+        { id: "5", author: "마블팬", rating: 5, content: "마블은 역시 실망시키지 않아요!", date: "2024-01-05" },
+        { id: "6", author: "액션히어로", rating: 4, content: "액션씬이 정말 화려하고 멋있었어요", date: "2024-01-03" }
       ]
     },
     {
@@ -83,8 +82,8 @@ const Home = () => {
       duration: "60분×9화",
       category: "trending",
       reviews: [
-        { user: "글로벌뷰어", rating: 5, comment: "전 세계가 열광한 이유를 알 수 있었어요!" },
-        { user: "한류팬", rating: 4, comment: "한국 콘텐츠의 위상을 보여준 작품" }
+        { id: "7", author: "글로벌뷰어", rating: 5, content: "전 세계가 열광한 이유를 알 수 있었어요!", date: "2024-01-01" },
+        { id: "8", author: "한류팬", rating: 4, content: "한국 콘텐츠의 위상을 보여준 작품", date: "2024-01-02" }
       ]
     },
     {
@@ -100,8 +99,8 @@ const Home = () => {
       duration: "108분",
       category: "custom",
       reviews: [
-        { user: "감성충만", rating: 5, comment: "인생 영화 등극! OST도 너무 좋아요" },
-        { user: "멜로홀릭", rating: 4, comment: "영상미가 정말 아름다워요" }
+        { id: "9", author: "감성충만", rating: 5, content: "인생 영화 등극! OST도 너무 좋아요", date: "2024-01-04" },
+        { id: "10", author: "멜로홀릭", rating: 4, content: "영상미가 정말 아름다워요", date: "2024-01-06" }
       ]
     },
     {
@@ -117,8 +116,8 @@ const Home = () => {
       duration: "50분×8화",
       category: "new",
       reviews: [
-        { user: "SF드라마광", rating: 5, comment: "밤새도록 정주행했어요!" },
-        { user: "80년대향수", rating: 4, comment: "80년대 분위기가 너무 좋아요" }
+        { id: "11", author: "SF드라마광", rating: 5, content: "밤새도록 정주행했어요!", date: "2024-01-07" },
+        { id: "12", author: "80년대향수", rating: 4, content: "80년대 분위기가 너무 좋아요", date: "2024-01-08" }
       ]
     },
     {
@@ -134,8 +133,8 @@ const Home = () => {
       duration: "99분",
       category: "awarded",
       reviews: [
-        { user: "색감천재", rating: 5, comment: "웨스 앤더슨 감독님은 천재 같아요!" },
-        { user: "코미디매니아", rating: 4, comment: "유머 코드가 너무 좋아요" }
+        { id: "13", author: "색감천재", rating: 5, content: "웨스 앤더슨 감독님은 천재 같아요!", date: "2024-01-09" },
+        { id: "14", author: "코미디매니아", rating: 4, content: "유머 코드가 너무 좋아요", date: "2024-01-10" }
       ]
     },
     {
@@ -151,8 +150,8 @@ const Home = () => {
       duration: "60분×3화",
       category: "new",
       reviews: [
-        { user: "SF철학자", rating: 5, comment: "생각할 거리를 던져주는 드라마" },
-        { user: "블랙미러팬", rating: 4, comment: "매 에피소드가 충격적이에요" }
+        { id: "15", author: "SF철학자", rating: 5, content: "생각할 거리를 던져주는 드라마", date: "2024-01-11" },
+        { id: "16", author: "블랙미러팬", rating: 4, content: "매 에피소드가 충격적이에요", date: "2024-01-12" }
       ]
     },
     {
@@ -168,8 +167,8 @@ const Home = () => {
       duration: "101분",
       category: "action",
       reviews: [
-        { user: "액션광", rating: 5, comment: "액션씬이 정말 시원하고 통쾌해요!" },
-        { user: "키아누팬", rating: 4, comment: "키아누 리브스는 역시 멋있어요" }
+        { id: "17", author: "액션광", rating: 5, content: "액션씬이 정말 시원하고 통쾌해요!", date: "2024-01-13" },
+        { id: "18", author: "키아누팬", rating: 4, content: "키아누 리브스는 역시 멋있어요", date: "2024-01-14" }
       ]
     },
     {
@@ -185,8 +184,8 @@ const Home = () => {
       duration: "112분",
       category: "action",
       reviews: [
-        { user: "마블매니아", rating: 4, comment: "베놈의 매력에 푹 빠졌어요!" },
-        { user: "톰하디팬", rating: 3, comment: "톰 하디의 연기는 역시 최고" }
+        { id: "19", author: "마블매니아", rating: 4, content: "베놈의 매력에 푹 빠졌어요!", date: "2024-01-15" },
+        { id: "20", author: "톰하디팬", rating: 3, content: "톰 하디의 연기는 역시 최고", date: "2024-01-16" }
       ]
     },
   ];

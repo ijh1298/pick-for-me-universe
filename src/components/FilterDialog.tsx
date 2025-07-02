@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -6,7 +5,9 @@ import { Badge } from "@/components/ui/badge";
 import { Filter, Sparkles } from "lucide-react";
 
 interface FilterDialogProps {
-  selectedFilters: {
+  isOpen: boolean;
+  onClose: () => void;
+  filters: {
     platforms: string[];
     genres: string[];
     moods: string[];
@@ -14,9 +15,8 @@ interface FilterDialogProps {
   onFiltersChange: (filters: { platforms: string[]; genres: string[]; moods: string[] }) => void;
 }
 
-const FilterDialog = ({ selectedFilters, onFiltersChange }: FilterDialogProps) => {
-  const [tempFilters, setTempFilters] = useState(selectedFilters);
-  const [isOpen, setIsOpen] = useState(false);
+const FilterDialog = ({ isOpen, onClose, filters, onFiltersChange }: FilterDialogProps) => {
+  const [tempFilters, setTempFilters] = useState(filters);
 
   const platforms = [
     { id: "Netflix", name: "Netflix", icon: "🎥", color: "bg-red-500" },
@@ -74,32 +74,20 @@ const FilterDialog = ({ selectedFilters, onFiltersChange }: FilterDialogProps) =
 
   const applyFilters = () => {
     onFiltersChange(tempFilters);
-    setIsOpen(false);
+    onClose();
   };
 
   const resetFilters = () => {
     const resetValues = { platforms: [], genres: [], moods: [] };
     setTempFilters(resetValues);
     onFiltersChange(resetValues);
-    setIsOpen(false);
+    onClose();
   };
 
-  const hasActiveFilters = selectedFilters.platforms.length > 0 || selectedFilters.genres.length > 0 || selectedFilters.moods.length > 0;
+  const hasActiveFilters = filters.platforms.length > 0 || filters.genres.length > 0 || filters.moods.length > 0;
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        <Button variant="outline" className="relative">
-          <Filter className="w-4 h-4 mr-2" />
-          필터
-          {hasActiveFilters && (
-            <Badge className="absolute -top-2 -right-2 w-5 h-5 p-0 flex items-center justify-center bg-purple-500 text-white text-xs rounded-full">
-              {selectedFilters.platforms.length + selectedFilters.genres.length + selectedFilters.moods.length}
-            </Badge>
-          )}
-        </Button>
-      </DialogTrigger>
-      
+    <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
