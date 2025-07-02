@@ -1,63 +1,73 @@
-# 📺 Pick for Me – OTT 콘텐츠 큐레이션 앱
+# Welcome to your Lovable project
 
-## 배포 링크
-https://pick-for-me-universe.lovable.app/
+## Project info
 
-## 🔍 소개
+**URL**: https://lovable.dev/projects/3997cbba-ad3c-4d44-a78e-845b3cd6dc12
 
-'Pick for Me'는 넷플릭스, 디즈니+, 웨이브 등 다양한 OTT 서비스에서 **너무 많은 선택지**로 인해 시청 결정을 어려워하는 사용자들을 위해 개발된 콘텐츠 추천 앱입니다.
+## How can I edit this code?
 
-사용자가 설정한 **취향, 목적, 관심 분야**를 기반으로 콘텐츠를 선별하여 제안하며, 각기 다른 상황과 목적에 맞춘 추천을 통해 **의사결정 피로를 줄이고 몰입도 높은 시청 경험**을 제공합니다.
+There are several ways of editing your application.
 
-## 💎 핵심 가치
+**Use Lovable**
 
-- 🎯 **개인 맞춤형 추천**  
-  장르, 분위기, 시청 목적 등 사용자 취향 기반 알고리즘으로 콘텐츠를 추천합니다.
+Simply visit the [Lovable Project](https://lovable.dev/projects/3997cbba-ad3c-4d44-a78e-845b3cd6dc12) and start prompting.
 
-- ⚡ **빠른 의사결정 지원**  
-  유튜버, 콘텐츠 리뷰어, 학습 목적 사용자 등 다양한 목적에 맞는 콘텐츠를 빠르게 선별할 수 있도록 돕습니다.
+Changes made via Lovable will be committed automatically to this repo.
 
-## 👤 페르소나
+**Use your preferred IDE**
 
-| 이름 | 나이 | 직업 | 주요 니즈 |
-|------|------|------|------------|
-| 임*혁 | 26세 | 대학생 | 여가 시간에 자신의 취향에 맞는 콘텐츠를 빠르게 찾고 싶음 |
-| 이*윤 | 27세 | 드라마 리뷰 유튜버 | 인기 많고 주목받는 드라마를 신속히 선정하여 리뷰 콘텐츠 제작에 활용하고 싶음 |
-| 장*영 | 21세 | 다큐멘터리 PD 지망생 | 특정 주제나 스타일의 고퀄리티 다큐멘터리를 학습 목적으로 시청하고 싶음 |
+If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
 
-## 📚 사용자 스토리
+The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
-### 🎬 1. 대학생 – 임*혁
+Follow these steps:
 
-> OTT에서 볼 게 너무 많아 뭘 고를지 고민하던 *혁은, ‘픽포미’ 앱을 실행해 미리 설정해둔 취향 기반 콘텐츠 추천을 받습니다. 추천 중 마음에 드는 콘텐츠를 선택해 넷플릭스에서 바로 시청하고, 감상 후 간단한 평가를 남기며 다음 추천 정확도를 높입니다.
+```sh
+# Step 1: Clone the repository using the project's Git URL.
+git clone <YOUR_GIT_URL>
 
-**주요 기능**
-- 취향 설정 (장르, 분위기, 목적)
-- 콘텐츠 추천 및 바로 보기
-- 콘텐츠 피드백 및 학습
+# Step 2: Navigate to the project directory.
+cd <YOUR_PROJECT_NAME>
 
----
+# Step 3: Install the necessary dependencies.
+npm i
 
-### 📈 2. 드라마 리뷰 유튜버 – 이*윤
+# Step 4: Start the development server with auto-reloading and an instant preview.
+npm run dev
+```
 
-> 리뷰 소재가 필요했던 이*윤은 ‘픽포미 프로’에서 SNS 반응 기반 트렌디한 콘텐츠를 탐색합니다. 실시간 차트와 타깃별 추천 필터를 통해 10~20대 여성 시청자들에게 인기 있는 콘텐츠를 빠르게 선정하고, 콘텐츠 요약 키워드를 참고해 유튜브 리뷰 영상 기획에 착수합니다.
+**Edit a file directly in GitHub**
 
-**주요 기능**
-- 실시간 인기 콘텐츠 차트
-- SNS 트렌드 기반 분석 시각화
-- 타깃 시청자 기반 필터
-- 리뷰용 포인트 제공
+- Navigate to the desired file(s).
+- Click the "Edit" button (pencil icon) at the top right of the file view.
+- Make your changes and commit the changes.
 
----
+**Use GitHub Codespaces**
 
-### 📚 3. 다큐멘터리 애호가 – 장*영
+- Navigate to the main page of your repository.
+- Click on the "Code" button (green button) near the top right.
+- Select the "Codespaces" tab.
+- Click on "New codespace" to launch a new Codespace environment.
+- Edit files directly within the Codespace and commit and push your changes once you're done.
 
-> 다큐멘터리 PD를 꿈꾸는 장*영은 학습 목적의 시청을 위해 앱을 사용합니다. 환경 주제의 인터뷰 중심 다큐를 필터링해 고평점 작품을 추천받고, 시청 중 메모 기능을 통해 주요 내용을 정리하며 공부합니다.
+## What technologies are used for this project?
 
-**주요 기능**
-- 주제/스타일 기반 다큐 필터링
-- 전문가/시청자 평점 기반 추천
-- 유사 콘텐츠 탐색
-- 시청 노트 기록 및 즐겨찾기 관리
+This project is built with:
 
----
+- Vite
+- TypeScript
+- React
+- shadcn-ui
+- Tailwind CSS
+
+## How can I deploy this project?
+
+Simply open [Lovable](https://lovable.dev/projects/3997cbba-ad3c-4d44-a78e-845b3cd6dc12) and click on Share -> Publish.
+
+## Can I connect a custom domain to my Lovable project?
+
+Yes, you can!
+
+To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+
+Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)

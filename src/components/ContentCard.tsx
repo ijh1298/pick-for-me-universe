@@ -50,7 +50,7 @@ const ContentCard = ({ content, onClick }: ContentCardProps) => {
 
   return (
     <Card 
-      className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-0 overflow-hidden cursor-pointer"
+      className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-0 overflow-hidden cursor-pointer bg-gray-800 hover:bg-gray-750"
       onClick={onClick}
     >
       <div className="relative">
@@ -69,7 +69,7 @@ const ContentCard = ({ content, onClick }: ContentCardProps) => {
         <Button
           size="sm"
           variant="secondary"
-          className={`absolute top-3 right-3 w-8 h-8 p-0 ${isLiked ? 'text-red-500' : 'text-gray-600'}`}
+          className={`absolute top-3 right-3 w-8 h-8 p-0 bg-gray-800/70 hover:bg-gray-700 ${isLiked ? 'text-red-500' : 'text-gray-300'}`}
           onClick={handleLikeToggle}
         >
           <Heart className={`w-4 h-4 ${isLiked ? 'fill-current' : ''}`} />
@@ -84,19 +84,19 @@ const ContentCard = ({ content, onClick }: ContentCardProps) => {
       
       <CardContent className="p-4">
         <div className="flex items-start justify-between mb-2">
-          <h3 className="font-bold text-lg leading-tight flex-1">{content.title}</h3>
-          <span className="text-sm text-gray-500 ml-2">{content.year}</span>
+          <h3 className="font-bold text-lg leading-tight flex-1 text-white">{content.title}</h3>
+          <span className="text-sm text-gray-400 ml-2">{content.year}</span>
         </div>
         
-        <p className="text-gray-600 text-sm mb-3 line-clamp-2">{content.description}</p>
+        <p className="text-gray-300 text-sm mb-3 line-clamp-2">{content.description}</p>
         
         <div className="flex items-center gap-2 mb-3">
-          <Badge variant="outline" className="text-xs">{content.genre}</Badge>
-          <Badge variant="secondary" className="text-xs">{content.mood}</Badge>
+          <Badge variant="outline" className="text-xs border-gray-600 text-gray-300">{content.genre}</Badge>
+          <Badge variant="secondary" className="text-xs bg-gray-700 text-gray-300">{content.mood}</Badge>
         </div>
         
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1 text-xs text-gray-500">
+          <div className="flex items-center gap-1 text-xs text-gray-400">
             <Clock className="w-3 h-3" />
             {content.duration}
           </div>
