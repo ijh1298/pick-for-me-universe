@@ -6,7 +6,7 @@ import ContentDetailDialog from "@/components/ContentDetailDialog";
 import FilterDialog from "@/components/FilterDialog";
 import InfiniteCarousel from "@/components/InfiniteCarousel";
 import { Button } from "@/components/ui/button";
-import { Filter, Sparkles, TrendingUp, Award, Zap, Calendar, Settings } from "lucide-react";
+import { Filter, Sparkles, TrendingUp, Award, Zap, Calendar, Settings, Star } from "lucide-react";
 
 const Home = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -18,7 +18,7 @@ const Home = () => {
     moods: [],
   });
 
-  // 목 데이터 - 썸네일 수정
+  // 목 데이터 - 썸네일 복원
   const allContents = [
     {
       id: "1",
@@ -228,16 +228,27 @@ const Home = () => {
             <h2 className="text-3xl font-bold text-white">맞춤 추천</h2>
           </div>
           
-          {/* Enhanced Filter Button */}
-          <Button
-            onClick={() => setIsFilterOpen(true)}
-            size="lg"
-            className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white border-0 px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-          >
-            <Settings className="w-5 h-5 mr-3" />
-            <span className="font-semibold">스마트 필터</span>
-            <Filter className="w-4 h-4 ml-2" />
-          </Button>
+          {/* 더 크고 세련된 필터 버튼 */}
+          <div className="relative">
+            <Button
+              onClick={() => setIsFilterOpen(true)}
+              className="premium-filter-button group relative overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 opacity-100 transition-opacity group-hover:opacity-90"></div>
+              <div className="relative z-10 flex items-center gap-4 px-8 py-4">
+                <div className="flex items-center gap-2">
+                  <Settings className="w-6 h-6 text-white drop-shadow-md" />
+                  <span className="text-lg font-bold text-white drop-shadow-md">스마트 필터</span>
+                </div>
+                <div className="h-6 w-px bg-white/30"></div>
+                <div className="flex items-center gap-2">
+                  <Filter className="w-5 h-5 text-white/80" />
+                  <Star className="w-4 h-4 text-yellow-300 animate-pulse" />
+                </div>
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+            </Button>
+          </div>
         </div>
 
         {/* Content Sections */}
@@ -331,6 +342,7 @@ const Home = () => {
 
       {/* Dialogs */}
       <FilterDialog
+        isOpen={isFilterOpen}
         onClose={() => setIsFilterOpen(false)}
         filters={filters}
         onFiltersChange={setFilters}
