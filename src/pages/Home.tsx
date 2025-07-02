@@ -1,10 +1,12 @@
+
 import { useState } from "react";
 import Header from "@/components/Header";
 import ContentCard from "@/components/ContentCard";
 import ContentDetailDialog from "@/components/ContentDetailDialog";
 import FilterDialog from "@/components/FilterDialog";
+import InfiniteCarousel from "@/components/InfiniteCarousel";
 import { Button } from "@/components/ui/button";
-import { Filter, Sparkles, TrendingUp, Award, Zap, Calendar } from "lucide-react";
+import { Filter, Sparkles, TrendingUp, Award, Zap, Calendar, Settings } from "lucide-react";
 
 const Home = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -16,7 +18,7 @@ const Home = () => {
     moods: [],
   });
 
-  // 목 데이터 수정 - 리뷰 데이터 구조 수정
+  // 목 데이터 - 썸네일 수정
   const allContents = [
     {
       id: "1",
@@ -162,7 +164,7 @@ const Home = () => {
       mood: "신나는 😄",
       rating: 4.0,
       year: 2014,
-      thumbnail: "https://i.namu.wiki/i/j-_kWOb50c-jJqjmo9lYrogF-TGYlxqj-JYJ-YSjK-woRj-Qrg9Rhw-bnuwBWj-QK5ENF0jZ9gG-c8yBvJVRw.webp",
+      thumbnail: "https://images.unsplash.com/photo-1635805737707-575885ab0820?w=300&h=450&fit=crop",
       description: "액션 영화의 새로운 지평을 연 작품. 키아누 리브스의 화려한 액션이 돋보입니다.",
       duration: "101분",
       category: "action",
@@ -179,7 +181,7 @@ const Home = () => {
       mood: "신나는 😄",
       rating: 3.9,
       year: 2018,
-      thumbnail: "https://movie-phinf.pstatic.net/20181016_217/1539675693544eKsmj_JPEG/movie_image.jpg",
+      thumbnail: "https://images.unsplash.com/photo-1571847140471-1d7766e825ea?w=300&h=450&fit=crop",
       description: "마블 코믹스의 빌런 베놈을 주인공으로 한 영화. 톰 하디의 연기와 화려한 액션이 돋보입니다.",
       duration: "112분",
       category: "action",
@@ -206,20 +208,35 @@ const Home = () => {
       <Header />
       
       <main className="container mx-auto px-4 py-8">
+        {/* Hero Section with Infinite Carousel */}
+        <section className="mb-12">
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-bold text-white mb-4 pick-gradient-text">
+              당신만을 위한 특별한 추천
+            </h1>
+            <p className="text-gray-400 text-lg">
+              AI가 선별한 맞춤형 콘텐츠를 만나보세요
+            </p>
+          </div>
+          <InfiniteCarousel />
+        </section>
+
         {/* Filter Section */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-3">
             <Sparkles className="w-8 h-8 text-purple-400" />
-            <h1 className="text-3xl font-bold text-white">맞춤 추천</h1>
+            <h2 className="text-3xl font-bold text-white">맞춤 추천</h2>
           </div>
           
+          {/* Enhanced Filter Button */}
           <Button
             onClick={() => setIsFilterOpen(true)}
-            variant="outline"
-            className="border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white"
+            size="lg"
+            className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white border-0 px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
           >
-            <Filter className="w-4 h-4 mr-2" />
-            필터
+            <Settings className="w-5 h-5 mr-3" />
+            <span className="font-semibold">스마트 필터</span>
+            <Filter className="w-4 h-4 ml-2" />
           </Button>
         </div>
 
@@ -227,10 +244,10 @@ const Home = () => {
         <div className="space-y-12">
           {/* 맞춤 추천 */}
           <section>
-            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+            <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
               <Sparkles className="w-6 h-6 text-purple-400" />
               당신을 위한 맞춤 추천
-            </h2>
+            </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {customRecommendations.map((content) => (
                 <ContentCard
@@ -244,10 +261,10 @@ const Home = () => {
 
           {/* 지금 뜨고 있는 작품 */}
           <section>
-            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+            <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
               <TrendingUp className="w-6 h-6 text-red-400" />
               지금 뜨고 있는 작품
-            </h2>
+            </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {trendingContents.map((content) => (
                 <ContentCard
@@ -261,10 +278,10 @@ const Home = () => {
 
           {/* 최신 출시작 */}
           <section>
-            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+            <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
               <Calendar className="w-6 h-6 text-green-400" />
               최신 출시작
-            </h2>
+            </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {newReleases.map((content) => (
                 <ContentCard
@@ -278,10 +295,10 @@ const Home = () => {
 
           {/* 수상작 & 화제작 */}
           <section>
-            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+            <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
               <Award className="w-6 h-6 text-yellow-400" />
               수상작 & 화제작
-            </h2>
+            </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {awardedContents.map((content) => (
                 <ContentCard
@@ -295,10 +312,10 @@ const Home = () => {
 
           {/* 액션 & 스릴러 */}
           <section>
-            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+            <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
               <Zap className="w-6 h-6 text-orange-400" />
               액션 & 스릴러
-            </h2>
+            </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {actionThrillerContents.map((content) => (
                 <ContentCard
@@ -314,7 +331,6 @@ const Home = () => {
 
       {/* Dialogs */}
       <FilterDialog
-        isOpen={isFilterOpen}
         onClose={() => setIsFilterOpen(false)}
         filters={filters}
         onFiltersChange={setFilters}

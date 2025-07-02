@@ -101,3 +101,17 @@
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
+
+/* 무한 스크롤 애니메이션 */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll-left {
+  animation: scroll-left 30s linear infinite;
+}
