@@ -2,7 +2,7 @@
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/3997cbba-ad3c-4d44-a78e-845b3cd6dc12
+**URL**: https://pick-for-me-universe.lovable.app
 
 ## How can I edit this code?
 
