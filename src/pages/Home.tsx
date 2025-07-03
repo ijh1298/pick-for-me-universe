@@ -1,9 +1,11 @@
+
 import { useState } from "react";
 import Header from "@/components/Header";
 import ContentCard from "@/components/ContentCard";
 import ContentDetailDialog from "@/components/ContentDetailDialog";
 import FilterDialog from "@/components/FilterDialog";
 import InfiniteCarousel from "@/components/InfiniteCarousel";
+import ReviewHighlightCard from "@/components/ReviewHighlightCard";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Filter, Sparkles, TrendingUp, Award, Zap, Calendar, Settings, Star, X, ThumbsUp } from "lucide-react";
@@ -31,7 +33,7 @@ const Home = () => {
       mood: "긴장감 넘치는 😰",
       rating: 4.8,
       year: 2019,
-      thumbnail: "https://images.unsplash.com/photo-1489599904472-84b9ca35e8b1?w=300&h=450&fit=crop",
+      thumbnail: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=300&h=450&fit=crop",
       description: "전 세계를 뒤흔든 봉준호 감독의 대표작. 계급사회의 모순을 날카롭게 그려낸 작품입니다.",
       duration: "132분",
       category: "custom",
@@ -257,35 +259,35 @@ const Home = () => {
               당신만을 위한 특별한 추천
             </h1>
             <p className="text-gray-400 text-lg">
-              AI가 선별한 맞춘형 콘텐츠를 만나보세요
+              AI가 선별한 맞춤형 콘텐츠를 만나보세요
             </p>
           </div>
           <InfiniteCarousel />
         </section>
 
-        {/* Filter Section */}
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-3">
+        {/* Filter Section - 중앙 정렬 및 새로운 디자인 */}
+        <div className="flex flex-col items-center mb-8">
+          <div className="flex items-center gap-3 mb-6">
             <Sparkles className="w-8 h-8 text-purple-400" />
             <h2 className="text-3xl font-bold text-white">맞춤 추천</h2>
           </div>
           
-          {/* 더 크고 세련된 필터 버튼 */}
+          {/* 중앙에 위치한 더 넓은 필터 버튼 */}
           <div className="relative">
             <Button
               onClick={() => setIsFilterOpen(true)}
-              className="premium-filter-button group relative overflow-hidden"
+              className="premium-filter-button-wide group relative overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 opacity-100 transition-opacity group-hover:opacity-90"></div>
-              <div className="relative z-10 flex items-center gap-4 px-8 py-4">
-                <div className="flex items-center gap-2">
-                  <Settings className="w-6 h-6 text-white drop-shadow-md" />
-                  <span className="text-lg font-bold text-white drop-shadow-md">스마트 필터</span>
+              <div className="relative z-10 flex items-center gap-6 px-12 py-5">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">🎯</span>
+                  <span className="text-xl font-bold text-white drop-shadow-md">취향 다시 고르기</span>
                 </div>
-                <div className="h-6 w-px bg-white/30"></div>
-                <div className="flex items-center gap-2">
-                  <Filter className="w-5 h-5 text-white/80" />
-                  <Star className="w-4 h-4 text-yellow-300 animate-pulse" />
+                <div className="h-8 w-px bg-white/30"></div>
+                <div className="flex items-center gap-3">
+                  <Settings className="w-6 h-6 text-white/80" />
+                  <Star className="w-5 h-5 text-yellow-300 animate-pulse" />
                 </div>
               </div>
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
@@ -350,15 +352,15 @@ const Home = () => {
 
         {/* Content Sections */}
         <div className="space-y-12">
-          {/* 공감 많은 리뷰 기반 추천 */}
+          {/* 공감 많은 리뷰 기반 추천 - 새로운 디자인 */}
           <section>
             <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
               <ThumbsUp className="w-6 h-6 text-green-400" />
               리뷰어들이 극찬한 작품
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="space-y-4">
               {popularReviewContents.map((content) => (
-                <ContentCard
+                <ReviewHighlightCard
                   key={content.id}
                   content={content}
                   onClick={() => handleContentClick(content)}

@@ -130,3 +130,18 @@
 .premium-filter-button:active {
   transform: translateY(0) scale(0.98);
 }
+
+/* 새로운 넓은 필터 버튼 스타일 */
+.premium-filter-button-wide {
+  @apply relative h-20 px-0 py-0 rounded-3xl shadow-2xl border-0 transition-all duration-300 hover:scale-105 hover:shadow-purple-500/25;
+  min-width: 400px;
+}
+
+.premium-filter-button-wide:hover {
+  box-shadow: 0 25px 50px -12px rgba(168, 85, 247, 0.4), 0 0 40px rgba(236, 72, 153, 0.3);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.premium-filter-button-wide:active {
+  transform: translateY(0) scale(0.98);
+}
